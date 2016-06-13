@@ -31,8 +31,8 @@ function connectDb($dbname)
  * @return string
  */
 function wordnet($file){
-	$indexStatements = "INSERT INTO `as_index`(`lemma`, `pos`, `synset_cnt`, `ptr_cnt`, `ptr`, `sense_cnt`, `tagsense_cnt`, `offset`) VALUES";
-	$dataStaements = "INSERT INTO `adata`(`offset`, `lex_filenum`, `ss_type`, `w_cnt`, `word`, `p_cnt`, `ptr`, `f_cnt`, `frames`, `definition`, `sentence`) VALUES";
+	$indexStatements = "INSERT INTO `index`(`lemma`, `pos`, `synset_cnt`, `ptr_cnt`, `ptr`, `sense_cnt`, `tagsense_cnt`, `offset`) VALUES";
+	$dataStaements = "INSERT INTO `data`(`offset`, `lex_filenum`, `ss_type`, `w_cnt`, `word`, `p_cnt`, `ptr`, `f_cnt`, `frames`, `definition`, `sentence`) VALUES";
 
 	$lineCount = count($file)-1;
 	$value='';
