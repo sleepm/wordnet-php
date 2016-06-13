@@ -31,8 +31,8 @@ function connectDb($dbname)
  * @return string
  */
 function wordnet($file){
-	$indexStatements = "INSERT INTO `as_index`(`lemma`, `pos`, `synset_cnt`, `ptr_cnt`, `ptr`, `sense_cnt`, `tagsense_cnt`, `offset`) VALUES";
-	$dataStaements = "INSERT INTO `adata`(`offset`, `lex_filenum`, `ss_type`, `w_cnt`, `word`, `p_cnt`, `ptr`, `f_cnt`, `frames`, `definition`, `sentence`) VALUES";
+	$indexStatements = "INSERT INTO `index`(`lemma`, `pos`, `synset_cnt`, `ptr_cnt`, `ptr`, `sense_cnt`, `tagsense_cnt`, `offset`) VALUES";
+	$dataStaements = "INSERT INTO `data`(`offset`, `lex_filenum`, `ss_type`, `w_cnt`, `word`, `p_cnt`, `ptr`, `f_cnt`, `frames`, `definition`, `sentence`) VALUES";
 
 	$lineCount = count($file)-1;
 	$value='';
@@ -153,9 +153,10 @@ function data($line)
 			$definition=$gloss[$j];
 		}
 		*/
-		$j==0?$definition=$gloss[$j]:$sentence[]=$gloss[$j];
+		//$j==0?$definition=$gloss[$j]:$sentence[]=$gloss[$j]; //a little bug too.. like offset='09560255'
+		preg_match('#"(.*)"#', $gloss[$j])?$sentence[]=$gloss[$j]:$definition[]=$gloss[$j];
 	}
-	$definition = $sql->escape_string($definition);
+	$definition = $sql->escape_string(json_encode($definition));
 	$sentence = $sentence==""?null:$sql->escape_string(json_encode($sentence));
 	
 	$value = "('$offset', $lex_filenum, '$ss_type', $w_cnt, '$word', $p_cnt, '$ptr', $f_cnt, '$frames', '$definition','$sentence'),";
