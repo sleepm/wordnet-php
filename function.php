@@ -153,9 +153,10 @@ function data($line)
 			$definition=$gloss[$j];
 		}
 		*/
-		$j==0?$definition=$gloss[$j]:$sentence[]=$gloss[$j];
+		//$j==0?$definition=$gloss[$j]:$sentence[]=$gloss[$j]; //a little bug too.. like offset='09560255'
+		preg_match('#"(.*)"#', $gloss[$j])?$sentence[]=$gloss[$j]:$definition[]=$gloss[$j];
 	}
-	$definition = $sql->escape_string($definition);
+	$definition = $sql->escape_string(json_encode($definition));
 	$sentence = $sentence==""?null:$sql->escape_string(json_encode($sentence));
 	
 	$value = "('$offset', $lex_filenum, '$ss_type', $w_cnt, '$word', $p_cnt, '$ptr', $f_cnt, '$frames', '$definition','$sentence'),";
