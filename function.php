@@ -129,15 +129,14 @@ function data($line)
 	}
 	
 	$frames = "";
-	$f_cnt = $data[$w_cnt*2+$p_cnt*4+5]; //$w_cnt*2+4+$p_cnt*4+1
-	$f_cnt = count($f_cnt)!=1?$f_cnt:'null';
+	$f_cnt = 1*$data[$w_cnt*2+$p_cnt*4+5]; //$w_cnt*2+4+$p_cnt*4+1
 	if($f_cnt!=0){
 		$frame = array_slice($data,$w_cnt*2+$p_cnt*4+6,$f_cnt*3);
 		$countFrame = count($frame);
 		for($i=0;$i<$countFrame;$i+=3){
 			$frames[]=($i<$countFrame)?array_merge([$frame[$i+1]],[$frame[$i+2]]):'';
 		}
-		$frames = json_encode($frames)."\n";
+		$frames = json_encode($frames);
 	}
 	
 	$gloss = explode(';',trim($one[1]));
@@ -154,7 +153,7 @@ function data($line)
 		}
 		*/
 		//$j==0?$definition=$gloss[$j]:$sentence[]=$gloss[$j]; //a little bug too.. like offset='09560255'
-		preg_match('#"(.*)"#', $gloss[$j])?$sentence[]=$gloss[$j]:$definition[]=$gloss[$j];
+		preg_match('#^"(.*)"$#', $gloss[$j])?$sentence[]=$gloss[$j]:$definition[]=$gloss[$j];
 	}
 	$definition = $sql->escape_string(json_encode($definition));
 	$sentence = $sentence==""?null:$sql->escape_string(json_encode($sentence));
