@@ -71,8 +71,8 @@ function index($line)
 		for($i=0;$i<$ptr_cnt;$i++){
 		$ptr .= '"'.$one[$i+4].'",';
 	    }
-	$ptr = $ptr!=''?$sql->escape_string('['.trim($ptr,',').']'):null;
 	}
+	$ptr = $ptr!=''?$sql->escape_string('['.trim($ptr,',').']'):null;
 	
 	$sense_cnt = $one[$ptr_cnt+4]*1;
 	
